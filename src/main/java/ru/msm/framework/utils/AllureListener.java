@@ -9,7 +9,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import ru.msm.framework.managers.DriverManager;
 
-public class AllureListener extends AllureCucumber5Jvm {   //implements TestWatcher
+public class AllureListener extends AllureCucumber5Jvm implements TestWatcher{   //implements TestWatcher
 
     DriverManager DRIVER_MANAGER = DriverManager.getINSTANCE();
 
@@ -18,20 +18,20 @@ public class AllureListener extends AllureCucumber5Jvm {   //implements TestWatc
         return ((TakesScreenshot) DRIVER_MANAGER.getDriver()).getScreenshotAs(OutputType.BYTES);
     }
 
-    @Override
-    public void setEventPublisher(final EventPublisher publisher) {
-        publisher.registerHandlerFor(TestCaseFinished.class, event -> {
-            if (event.getResult().getError() != null) { //?
-                getScreenshot();
-            }
-        });
-        super.setEventPublisher(publisher);
-    }
-
 //    @Override
-//    public void testFailed(ExtensionContext context, Throwable cause) {
-//            getScreenshot();
+//    public void setEventPublisher(final EventPublisher publisher) {
+//        publisher.registerHandlerFor(TestCaseFinished.class, event -> {
+//            if (event.getResult().getError() != null) { //?
+//                getScreenshot();
+//            }
+//        });
+//        super.setEventPublisher(publisher);
 //    }
+
+    @Override
+    public void testFailed(ExtensionContext context, Throwable cause) {
+            getScreenshot();
+    }
 
 //    @Override
 //    public void afterTestExecution(ExtensionContext context) {

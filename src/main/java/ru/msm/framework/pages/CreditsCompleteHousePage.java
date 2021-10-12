@@ -74,7 +74,7 @@ public class CreditsCompleteHousePage extends BasePage {
                 WebElement span = resultBlockSpans.get(j);
                 if (span.getText().contains(arg.get(0))) {
                     Assertions.assertEquals(formatD(arg.get(1)), formatD(valuesSpans.get(j).getText()),
-                            "Значение поля " + span.getText() + " не соответствует ождаемому!");
+                            "Значение поля " + span.getText() + " не соответствует ожидаемому!");
                     break;
                 }
             }
