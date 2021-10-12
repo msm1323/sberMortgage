@@ -10,8 +10,9 @@ import org.junit.runner.RunWith;
         features = {"src/test/resources/scripts"},
         glue = {"ru.msm.framework.steps"},
         tags = {"@all"},
-//        plugin = {"io.qameta.allure.cucumber5jvm.AllureCucumber5Jvm"},
-        snippets = CucumberOptions.SnippetType.CAMELCASE
+        plugin = {"ru.msm.framework.utils.AllureListener"},  //io.qameta.allure.cucumber5jvm.AllureCucumber5Jvm
+        snippets = CucumberOptions.SnippetType.CAMELCASE,
+        strict = true
 )
 
 public class CucumberRunner {
