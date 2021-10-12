@@ -19,19 +19,18 @@ public class CreditsCompleteHousePageStep {
         PAGE_MANAGER.getCreditsCompleteHousePage().fillFields(arg.asLists());
     }
 
-    @И("убрать галочку {string}")
+    @И("^убрать галочку \"(.+)\"$")
     public void unselect(String arg0) {
         PAGE_MANAGER.getCreditsCompleteHousePage().switcherDiscountsBlock(false, arg0);
     }
 
-    @И("поставить галочку {string}")
+    @И("^поставить галочку \"(.+)\"$")
     public void select(String arg0) {
         PAGE_MANAGER.getCreditsCompleteHousePage().switcherDiscountsBlock(true, arg0);
     }
 
     @Тогда("проверить значения полей")
     public void checkLabelsValues(DataTable arg) {
-
         PAGE_MANAGER.getCreditsCompleteHousePage().checkLabelsValues(arg.asLists());
     }
 
