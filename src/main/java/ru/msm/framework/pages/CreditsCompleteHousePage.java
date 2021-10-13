@@ -66,7 +66,6 @@ public class CreditsCompleteHousePage extends BasePage {
                     String oldV = valuesSpans.get(0).getAttribute("outerText");
                     scrollToElementJs(discountCheckboxes.get(i));
                     action.sendKeys(Keys.chord(Keys.ARROW_UP, Keys.ARROW_UP, Keys.ARROW_UP)).perform();
-//                    waitUntilElementToBeClickable(discountCheckboxes.get(i)).click();
                     discountCheckboxes.get(i).click();
                     wait.until(ExpectedConditions.not(ExpectedConditions.attributeToBe(valuesSpans.get(0),  //?
                             "outerText", oldV)));
@@ -85,6 +84,8 @@ public class CreditsCompleteHousePage extends BasePage {
             for (int j = 0; j < resultBlockSpans.size(); j++) {
                 WebElement span = resultBlockSpans.get(j);
                 if (span.getText().contains(arg.get(0))) {
+                    scrollToElementJs(span);    //  ради понятного красивого...
+                    action.sendKeys(Keys.chord(Keys.ARROW_UP, Keys.ARROW_UP, Keys.ARROW_UP)).perform();//...скрина
                     Assertions.assertEquals(formatD(arg.get(1)), formatD(valuesSpans.get(j).getText()),
                             "Значение поля " + span.getText() + " не соответствует ожидаемому!");
                     break;
