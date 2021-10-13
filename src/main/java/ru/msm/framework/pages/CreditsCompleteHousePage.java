@@ -6,7 +6,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
-import java.util.function.Consumer;
 
 public class CreditsCompleteHousePage extends BasePage {
 
