@@ -3,6 +3,7 @@ package ru.msm.framework.pages;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -29,7 +30,7 @@ public class CreditsCompleteHousePage extends BasePage {
     @FindBy(xpath = "//div[contains(@data-e2e-id,'result-block')]//span[contains(@class,'_270Um')]")    //пара
     protected List<WebElement> resultBlockSpans;
 
-    @FindBy(xpath = "//div[contains(@data-e2e-id,'result-block')]//span[contains(@class,'_270Um')]/..//span[contains(@class,'_1bsib')]")
+    @FindBy(xpath = "//div[contains(@data-e2e-id,'result-block')]//span[contains(@class,'_1bsib')]")
     protected List<WebElement> valuesSpans;
 
     public void fillFields(List<List<String>> args) {
@@ -38,8 +39,18 @@ public class CreditsCompleteHousePage extends BasePage {
             for (int j = 0; j < divInputs.size(); j++) {
                 WebElement div = divInputs.get(j);
                 if (div.getText().contains(arg.get(0))) {
-                    inputs.get(j).sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
-                    inputs.get(j).sendKeys(formatD(arg.get(1)));
+                    WebElement field = inputs.get(j);
+                    String v = formatD(arg.get(1));
+                    if (formatD(field.getAttribute("value")).equals(v)) {
+                        break;
+                    }
+                    String oldV = field.getAttribute("value");
+                    field.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+                    field.sendKeys(v);
+                    wait.until(ExpectedConditions.not(ExpectedConditions.attributeToBe(field,
+                            "value", oldV)));
+                    Assertions.assertEquals(v, formatD(field.getAttribute("value")),
+                            "Значение в поле не совпадает с ожидаемым!");
                     break;
                 }
             }
@@ -52,14 +63,16 @@ public class CreditsCompleteHousePage extends BasePage {
         for (int i = 0; i < discountSpans.size(); i++) {
             WebElement span = discountSpans.get(i);
             if (span.getText().contains(nameSpan)) {
-                String checked = discountCheckboxes.get(i).getAttribute("aria-checked");
-                if (!checked.equals(Boolean.toString(select))) {
+                if (!discountCheckboxes.get(i).isSelected() == (select)) {
+                    String oldV = valuesSpans.get(0).getAttribute("outerText");
                     scrollToElementJs(discountCheckboxes.get(i));
                     action.sendKeys(Keys.chord(Keys.ARROW_UP, Keys.ARROW_UP, Keys.ARROW_UP)).perform();
+//                    waitUntilElementToBeClickable(discountCheckboxes.get(i)).click();
                     discountCheckboxes.get(i).click();
-//                        waitUntilElementToBeClickable(discountCheckboxes.get(i)).click();
+                    wait.until(ExpectedConditions.not(ExpectedConditions.attributeToBe(valuesSpans.get(0),  //?
+                            "outerText", oldV)));
                 }
-                Assertions.assertEquals(Boolean.toString(select), discountCheckboxes.get(i).getAttribute("aria-checked"),
+                Assertions.assertEquals(select, discountCheckboxes.get(i).isSelected(),
                         "Не удалось перевести в нужное состояние checkbox \"" + nameSpan + "\"!");
                 break;
             }
@@ -70,7 +83,7 @@ public class CreditsCompleteHousePage extends BasePage {
     public void checkLabelsValues(List<List<String>> args) {
         DRIVER.switchTo().frame(iframeCalculator);
         for (List<String> arg : args) {
-            for (int j = 0; j < resultBlockSpans.size(); j++) { //switch case???
+            for (int j = 0; j < resultBlockSpans.size(); j++) {
                 WebElement span = resultBlockSpans.get(j);
                 if (span.getText().contains(arg.get(0))) {
                     Assertions.assertEquals(formatD(arg.get(1)), formatD(valuesSpans.get(j).getText()),
