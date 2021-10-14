@@ -93,6 +93,7 @@ public class DriverManager {
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
+                break;
             default:
                 Assertions.fail("Типа браузера '" + PROPERTIES_MANAGER.getProperty(TYPE_BROWSER) + "' не существует во фреймворке");
         }
