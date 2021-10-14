@@ -6,6 +6,10 @@ public class PropertiesConstants {
 
     public static final String TYPE_BROWSER = "type.browser";
 
+    public static final String REMOTE_BROWSER_TYPE = "remote.browser.type";
+
+    public static final String REMOTE_BROWSER_VERSION = "remote.browser.version";
+
     public static final String PATH_CHROME_DRIVER_WINDOWS = "path.chrome.driver.windows";
 
     public static final String PATH_GECKO_DRIVER_WINDOWS = "path.gecko.driver.windows";
