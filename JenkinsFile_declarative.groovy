@@ -4,7 +4,7 @@ pipeline {
     agent { label 'linux' }
     parameters {
         string(name: 'TAG', defaultValue: '@all', description: 'тег для запуска')
-        string(name: 'BROWSER_TYPE', defaultValue: 'chrome', description: 'тип браузера')
+        string(name: 'BROWSER_TYPE', defaultValue: 'remote', description: 'тип браузера')
     }
     stages {
         stage('Build') {
