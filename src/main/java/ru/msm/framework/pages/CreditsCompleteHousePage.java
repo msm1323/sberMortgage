@@ -20,7 +20,7 @@ public class CreditsCompleteHousePage extends BasePage {
     @FindBy(xpath = "//input[contains(@class,'input-5-3-5')]")
     protected List<WebElement> inputs;
 
-    @FindBy(xpath = "//div[contains(@data-e2e-id,'discounts')]//span[@class='_1ZfZYgvLm4KBWPL41DOSO']")    //пара
+    @FindBy(xpath = "//div[contains(@data-e2e-id,'discounts')]//span[contains(@class,'_1ZfZY')]")    //пара
     protected List<WebElement> discountSpans;
 
     @FindBy(xpath = "//div[contains(@data-e2e-id,'discounts')]//input[@type='checkbox']")
