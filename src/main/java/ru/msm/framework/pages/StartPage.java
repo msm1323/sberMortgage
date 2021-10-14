@@ -6,30 +6,29 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 public class StartPage extends BasePage {
 
     @FindBy(xpath = "//button[@class='kitt-cookie-warning__close']")
-    private WebElement cookiesBtnClose;
+    protected WebElement cookiesBtnClose;
 
     public void clickOnTopMenuIcon(String icon) {
         clickOnElByName(menuIcons, icon);
     }
 
-    public void waitDropdownMenu(String icon) {
+    public void waitDropdownMenuAndClickOn(String icon) {
         clickOnElByName(dropdownIcons, icon);
     }
 
     private void clickOnElByName(List<WebElement> elements, String name) {
-        try {
+        Optional<WebElement> op = elements.stream()
+                .filter(el -> el.getText().contains(name))
+                .findFirst();
+        if (op.isPresent()) {
             waitUtilElementToBeVisible(
-                    waitUntilElementToBeClickable(elements.stream()
-                            .filter(el -> el.getText().contains(name))
-                            .findFirst()
-                            .get()
-                    )
-            ).click();
-        } catch (NoSuchElementException ex) {
+                    waitUntilElementToBeClickable(op.get())).click();
+        } else {
             Assertions.fail("Элемент \"" + name + "\" не найден!");
         }
     }

@@ -19,8 +19,8 @@ public class StartPageStep {
     }
 
     @И("^дождаться открытия выпадающего меню и выбрать \"(.+)\"$")
-    public void waitDropdownMenu(String subIcon) {
-        PAGE_MANAGER.getStartPage().waitDropdownMenu(subIcon);
+    public void waitDropdownMenuAndClickOn(String subIcon) {
+        PAGE_MANAGER.getStartPage().waitDropdownMenuAndClickOn(subIcon);
         logger.info("В выпадающем меню выбрано \"{}\"", subIcon);
     }
 }
